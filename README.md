@@ -17,8 +17,9 @@ Custom Policy definitions are created using the azurerm_policy_definition resour
 
 It is important to note that policy data resource should be imported using its policy name (as opposed to they displayName), since the displayName is not unique and it may change, whereas the name is always unique and the same unless the policy is deleted. In the configuration, we kept the displayName commented out as it describes the policy definition being imported.
 
-In a Terraform configuration, when an azurerm_policy_definition resource is referenced from an azurerm_policy_set_definition as per use used policy initiative for testing the module.
+Custom Policy definitions are created using the azurerm_policy_definition resource and built-in policies are imported using the azurerm_policy_definition data resource. Both resources are included in the corresponding initiatives Terraform configuration file; unless they are shared across initiatives, in which case they are defined in the main.tf file.
 
+Azure policies are defined as JSON, where we can define structurised json format for the policy. With the necessory perameter, we can define in the main.tf file and call barings template where necessory things required.
 
 
 
