@@ -10,6 +10,16 @@ azurerm_subscription_policy_assignment: Configures the specified Policy Definiti
 
 
 We have used this module with taking/caling necessory details with regards to enable policy for checking VM monitoring. Here in the description, we have added each module defination so that we can use them individually.
+The standard module structure looks as follows:
+-  main.tf, variable.tf, Files configuring a minimal module. Apart from main.tf, more complex modules may have additional resource configuration files from where we are calling barings module.
+
+Custom Policy definitions are created using the azurerm_policy_definition resource and built-in policies are imported using the azurerm_policy_definition data resource. Both resources are included in the corresponding initiatives Terraform configuration file; unless they are shared across initiatives, in which case they are defined in the main.tf file.
+
+It is important to note that policy data resource should be imported using its policy name (as opposed to they displayName), since the displayName is not unique and it may change, whereas the name is always unique and the same unless the policy is deleted. In the configuration, we kept the displayName commented out as it describes the policy definition being imported.
+
+In a Terraform configuration, when an azurerm_policy_definition resource is referenced from an azurerm_policy_set_definition as per use used policy initiative for testing the module.
+
+
 
 
 
