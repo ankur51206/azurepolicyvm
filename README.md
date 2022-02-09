@@ -13,8 +13,6 @@ We have used this module with taking/caling necessory details with regards to en
 
 
 
-```
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
