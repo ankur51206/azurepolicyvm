@@ -1,13 +1,32 @@
 # azurepolicyvm
 
+1: Funtion to set policy initiative defination.
 
 azurerm_policy_set_definition: policy set defination use to set policy initiative. Here, In this function we are reviewing if the policy is enabled or not. If custom policy not enabled, we have set flag that will be enable.
 
-azurerm_policy_definition: The policy definitions for the policy set definition. This is a json object representing the bundled policy definitions. Here, we have set necessory modules inside the fuction.
-Manages a policy rule definition on a management group or your provider subscription. Policy definitions do not take effect until they are assigned to a scope using a Policy Assignment
 
+
+2: Manages a policy rule definition on a management group or your provider subscription in which we are assigning policy.
+
+azurerm_policy_definition: The policy definitions for the policy set definition. This is a json object representing the bundled policy definitions. Here, we have set necessory modules inside the fuction. Manages a policy rule definition on a management group or your provider subscription. Policy definitions do not take effect until they are assigned to a scope using a Policy Assignment
+display_name: A friendly display name to use for this Policy Assignment. Changing this forces a new resource to be created.
+description:  A description to use for this Policy Assignment. Changing this forces a new resource to be created.
+policy_type:  This will be defines policy type.
+mode: Can be set to 'true' or 'false' to control whether the assignment is enforced (true) or not (false).
+management_group_name: The name which should be used for this Policy Assignment.
+policy_rule: This will be the rule where policy rules can be defined.
+parameters: A JSON mapping of any Parameters for this Policy which will be inject in the Azure account.
+
+
+3. 
 azurerm_subscription_policy_assignment: Configures the specified Policy Definition at the specified Scope. Also, Policy Set Definitions are supported. Inside this, we need to add all necessory details those are required to configure policy.
 
+
+
+
+
+
+Summary:
 
 We have used this module with taking/caling necessory details with regards to enable policy for checking VM monitoring. Here in the description, we have added each module defination so that we can use them individually.
 The standard module structure looks as follows:
