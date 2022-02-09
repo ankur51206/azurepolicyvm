@@ -21,6 +21,13 @@ parameters: A JSON mapping of any Parameters for this Policy which will be injec
 3. 
 azurerm_subscription_policy_assignment: Configures the specified Policy Definition at the specified Scope. Also, Policy Set Definitions are supported. Inside this, we need to add all necessory details those are required to configure policy.
 
+policy_assignments:    Map with maps to configure assignments. Map key is the name of the assignment. Each parameter will be enter in the string.
+policy_definition_id:  This attribute is the ID of the Policy Definition.
+subscription_id:       This will desines the subscription where we will be assiging the policy.
+location:              The Azure location where this policy assignment should exist. This is required when an Identity is assigned.
+parameters:   This will defines each policy parameters.
+
+
 
 
 
