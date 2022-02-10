@@ -4,12 +4,13 @@
 
 azurerm_policy_set_definition: policy set defination use to set policy initiative. Here, In this function we are reviewing if the policy is enabled or not. If custom policy not enabled, we have set flag that will be enable.
 
+In the first stage at "cutom_policy_enabled ? 0 : 1" we are checking the azure custom policy is being enabled or not, so that we can attach them with build in policies. Using exist_policy variable name. So that during caling the module, anyone can use existing policy as well.
 
 
 2: Manages a policy rule definition on a management group or your provider subscription in which we are assigning policy.
 
 azurerm_policy_definition: The policy definitions for the policy set definition. This is a json object representing the bundled policy definitions. Here, we have set necessory modules inside the fuction. Manages a policy rule definition on a management group or your provider subscription. Policy definitions do not take effect until they are assigned to a scope using a Policy Assignment
-display_name: A friendly display name to use for this Policy Assignment. Changing this forces a new resource to be created.
+display_name: A friendly display name to use for this Policy Assignment. Changing this forces a new resource to be created. Here we are passing display name and description of the policy at single using collaps. Such that we can set policy Display name and Description at a single run time.
 description:  A description to use for this Policy Assignment. Changing this forces a new resource to be created.
 policy_type:  This will be defines policy type.
 mode: Can be set to 'true' or 'false' to control whether the assignment is enforced (true) or not (false).
