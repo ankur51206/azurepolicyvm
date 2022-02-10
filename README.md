@@ -7,7 +7,7 @@ azurerm_policy_set_definition: policy set defination use to set policy initiativ
 In the first stage at "cutom_policy_enabled ? 0 : 1" we are checking the azure custom policy is being enabled or not, so that we can attach them with build in policies. Using exist_policy variable name. So that during caling the module, anyone can use existing policy as well.
 
 
-2: Manages a policy rule definition on a management group or your provider subscription in which we are assigning policy.
+2: Manages a policy rule definition on a management group or your provider subscription in which we are assigning policy. In this, we have added all necessory attributes those are using for creation of the policy defination. 
 
 azurerm_policy_definition: The policy definitions for the policy set definition. This is a json object representing the bundled policy definitions. Here, we have set necessory modules inside the fuction. Manages a policy rule definition on a management group or your provider subscription. Policy definitions do not take effect until they are assigned to a scope using a Policy Assignment
 
@@ -35,6 +35,7 @@ parameters: A JSON mapping of any Parameters for this Policy which will be injec
 
 3. 
 azurerm_subscription_policy_assignment: Configures the specified Policy Definition at the specified Scope. Also, Policy Set Definitions are supported. Inside this, we need to add all necessory details those are required to configure policy.
+
 
 policy_assignments:    Map with maps to configure assignments. Map key is the name of the assignment. Each parameter will be enter in the string.
 
@@ -69,6 +70,13 @@ It is important to note that policy data resource should be imported using its p
 Custom Policy definitions are created using the azurerm_policy_definition resource and built-in policies are imported using the azurerm_policy_definition data resource. Both resources are included in the corresponding initiatives Terraform configuration file; unless they are shared across initiatives, in which case they are defined in the main.tf file.
 
 Azure policies are defined as JSON, where we can define structurised json format for the policy. With the necessory perameter, we can define in the main.tf file and call barings template where necessory things required.
+
+
+NOTE: Azure has limiatation for the each policy defination counts which we need to keep in mind with this ref link https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-subscription-service-limits#azure-policy-limits provided by Microsoft.
+
+
+
+
 
 
 
