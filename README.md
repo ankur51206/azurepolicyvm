@@ -10,12 +10,26 @@ In the first stage at "cutom_policy_enabled ? 0 : 1" we are checking the azure c
 2: Manages a policy rule definition on a management group or your provider subscription in which we are assigning policy.
 
 azurerm_policy_definition: The policy definitions for the policy set definition. This is a json object representing the bundled policy definitions. Here, we have set necessory modules inside the fuction. Manages a policy rule definition on a management group or your provider subscription. Policy definitions do not take effect until they are assigned to a scope using a Policy Assignment
+
+
 display_name: A friendly display name to use for this Policy Assignment. Changing this forces a new resource to be created. Here we are passing display name and description of the policy at single using collaps. Such that we can set policy Display name and Description at a single run time.
+
+
 description:  A description to use for this Policy Assignment. Changing this forces a new resource to be created.
+
+
 policy_type:  This will be defines policy type.
+
+
 mode: Can be set to 'true' or 'false' to control whether the assignment is enforced (true) or not (false).
+
+
 management_group_name: The name which should be used for this Policy Assignment.
+
+
 policy_rule: This will be the rule where policy rules can be defined.
+
+
 parameters: A JSON mapping of any Parameters for this Policy which will be inject in the Azure account.
 
 
@@ -23,9 +37,17 @@ parameters: A JSON mapping of any Parameters for this Policy which will be injec
 azurerm_subscription_policy_assignment: Configures the specified Policy Definition at the specified Scope. Also, Policy Set Definitions are supported. Inside this, we need to add all necessory details those are required to configure policy.
 
 policy_assignments:    Map with maps to configure assignments. Map key is the name of the assignment. Each parameter will be enter in the string.
+
+
 policy_definition_id:  This attribute is the ID of the Policy Definition.
+
+
 subscription_id:       This will desines the subscription where we will be assiging the policy.
+
+
 location:              The Azure location where this policy assignment should exist. This is required when an Identity is assigned.
+
+
 parameters:   This will defines each policy parameters.
 
 
