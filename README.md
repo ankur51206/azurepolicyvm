@@ -1,65 +1,67 @@
 # azurepolicyvm
 
-1: Funtion to set policy initiative defination.
 
-azurerm_policy_set_definition: policy set defination use to set policy initiative. Here, In this function we are reviewing if the policy is enabled or not. If custom policy not enabled, we have set flag that will be enable.
+1. Data funtion to set policy initiative defination.
 
-In the first stage at "cutom_policy_enabled ? 0 : 1" we are checking the azure custom policy is being enabled or not, so that we can attach them with build in policies. Using exist_policy variable name. So that during caling the module, anyone can use existing policy as well.
+```terraform
+azurerm_policy_set_definition
+```
 
+A data source we are fetching azure existing policy set defination initiative id to create policy assignments. it has a conditional pramaeters depends on boolean variable `custom_policy_enabled`. if it is false then, it will call data source of azurerm_policy_set_definition and we required the resource id.
+if the value is true then it will call function `azurerm_policy_definition` i.e we can create a complete custom policy definition. 
 
-2: Manages a policy rule definition on a management group or your provider subscription in which we are assigning policy. In this, we have added all necessory attributes those are using for creation of the policy defination. 
+* exist_policy: we have to set the existing policy name, `azurerm_policy_set_definition` function will fetch the id of policy definition based on display_name.
 
-azurerm_policy_definition: The policy definitions for the policy set definition. This is a json object representing the bundled policy definitions. Here, we have set necessory modules inside the fuction. Manages a policy rule definition on a management group or your provider subscription. Policy definitions do not take effect until they are assigned to a scope using a Policy Assignment
+```terraform
+azurerm_policy_definition
+```
+
+2. To create a own custom policy we are using function `azurerm_policy_definition`, this function only run if the value of "cutsom_policy_enabled" is true.
+
+`azurerm_policy_definition`: The policy definitions for the policy set definition. This is a json object representing the bundled policy definitions. Here, we have set necessory values inside the fuction. it manages a policy rule definition on a management group or your provider subscription. it supports the following parameters.
 
 
 display_name: A friendly display name to use for this Policy Assignment. Changing this forces a new resource to be created. Here we are passing display name and description of the policy at single using collaps. Such that we can set policy Display name and Description at a single run time.
 
+description:  A description to use for this Policy Assignment. Changing this forces a new resource to be created. `coalesce` function is used it will fetch based value on policy_name and policy_display_name variable.
 
-description:  A description to use for this Policy Assignment. Changing this forces a new resource to be created.
+policy_type: The policy type. Possible values are `BuiltIn`, `Custom` and `NotSpecified`.
 
+mode: The policy mode that allows you to specify which resource types will be evaluated. Possible values are `All`, `Indexed`, `Microsoft.ContainerService.Data` etc.
 
-policy_type:  This will be defines policy type.
+management_group_name: The name which should be used for this Policy Assignment. `https://docs.microsoft.com/en-us/azure/governance/management-groups/overview`
 
+policy_rule: The policy rule for the policy definition. This is a JSON string representing the rule that contains an if and a then block..
 
-mode: Can be set to 'true' or 'false' to control whether the assignment is enforced (true) or not (false).
-
-
-management_group_name: The name which should be used for this Policy Assignment.
-
-
-policy_rule: This will be the rule where policy rules can be defined.
+parameters: arameters for the policy definition. This field is a JSON string that allows you to parameterize your policy definition.
 
 
-parameters: A JSON mapping of any Parameters for this Policy which will be inject in the Azure account.
+```terraform 
+azurerm_subscription_policy_assignment
+```
+3. Azurerm_subscription_policy_assignment: It is a assignment of custom or existing policy definition or initiative on subscription level. it has following values supported.
 
+name : The name which should be used for this Policy Assignment.
 
-3. 
-azurerm_subscription_policy_assignment: Configures the specified Policy Definition at the specified Scope. Also, Policy Set Definitions are supported. Inside this, we need to add all necessory details those are required to configure policy.
+policy_definition_id:  This attribute is the ID of the Policy Definition. `coalesce` function is used in that first it will look out the value of existing policy, if existing policy get `null` value then it take the value of second parameters.
 
+#### use case of coalese
+```terraforn
+> coalesce("a", "b")
+a
+> coalesce("", "b")
+b
+``` 
 
-policy_assignments:    Map with maps to configure assignments. Map key is the name of the assignment. Each parameter will be enter in the string.
+subscription_id:  ID of subscription to which policy assignment is set to be.
 
+location: The Azure location where this policy assignment should exist.
 
-policy_definition_id:  This attribute is the ID of the Policy Definition.
-
-
-subscription_id:       This will desines the subscription where we will be assiging the policy.
-
-
-location:              The Azure location where this policy assignment should exist. This is required when an Identity is assigned.
-
-
-parameters:   This will defines each policy parameters.
-
-
-
-
-
-
+parameters:   Set the value of definition parameters, it requires a JSON mapping.
 
 Summary:
 
-We have used this module with taking/caling necessory details with regards to enable policy for checking VM monitoring. Here in the description, we have added each module defination so that we can use them individually.
+We have used this module with taking/calling necessory details with regards to enable policy for checking VM monitoring. Here in the description, we have added each module defination so that we can use them individually.
 The standard module structure looks as follows:
 -  main.tf, variable.tf, Files configuring a minimal module. Apart from main.tf, more complex modules may have additional resource configuration files from where we are calling barings module.
 
@@ -74,10 +76,10 @@ Azure policies are defined as JSON, where we can define structurised json format
 
 NOTE: Azure has limiatation for the each policy defination counts which we need to keep in mind with this ref link https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-subscription-service-limits#azure-policy-limits provided by Microsoft.
 
-
-
-
-
+* Reference 
+`https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subscription_policy_assignment`
+`https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/policy_set_definition`
+`https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/policy_set_definition`
 
 
 
@@ -94,9 +96,3 @@ NOTE: Azure has limiatation for the each policy defination counts which we need 
 | policy\_parameters\_content | Parameters for the policy definition. This field is a json object that allows you to parameterize your policy definition. | `string` | n/a | yes |
 | policy\_rule\_content | The policy rule for the policy definition. This is a json object representing the rule that contains an if and a then block. | `string` | n/a | yes |
 
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| policy\_assignment | Azure policy assignments map |
-| policy\_definition\_id | Azure policy ID |
